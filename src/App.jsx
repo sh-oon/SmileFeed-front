@@ -1,12 +1,27 @@
+import { Fragment } from "react";
 import { Route, Routes } from "react-router-dom";
+import { RecoilRoot } from "recoil";
+import { Reset } from "styled-reset";
+
 import "./App.css";
-import Login from "./views/Login";
+import "./tailwind.css"
+
+import Home from "@/views/Home";
+import Login from "@/views/Login";
+import Register from "@/views/Register";
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Login />} />
-    </Routes>
+    <Fragment>
+      <Reset />
+      <RecoilRoot>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Routes>
+      </RecoilRoot>
+    </Fragment>
   );
 }
 
