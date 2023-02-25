@@ -10,11 +10,26 @@ body {
     sans-serif !important;
   -webkit-font-smoothing: antialiased !important;
   -moz-osx-font-smoothing: grayscale !important;
+  height: 100dvh;
+  max-height: 100%;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+#root {
+  height: 100%;
+}
+
+.bg {
+  @apply md:h-1/2 md:w-full md:object-cover md:bg-center md:bg-no-repeat md:shadow-2xl
+  h-full w-full object-cover bg-center bg-no-repeat fixed top-0 left-0;
+}
+
+.shadow-custom {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 .square:after {

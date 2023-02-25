@@ -1,0 +1,9 @@
+.wrap {
+  height: 100dvh;
+  max-height: 100vh;
+  @apply flex flex-col justify-center items-center relative;
+}
+
+.contentsWrap {
+  @apply h-full w-full relative;
+}

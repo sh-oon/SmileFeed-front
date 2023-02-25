@@ -25,16 +25,15 @@ const Header = () => {
     if (location.pathname === "/") {
       setCurrentPage("Home");
     } else {
-      setCurrentPage(location.pathname.slice(1, location.pathname.length));
+      setCurrentPage(location.pathname.slice(1));
     }
   }, []);
 
   return (
     <>
-      <header className="flex w-full justify-between items-center px-4">
-        <div className="p-4">로고</div>
+      <header className="flex w-full bg-white justify-center items-center px-4 fixed top-0 z-50">
         <nav className="relative">
-          <ul className="flex gap-2">
+          <ul className="flex gap-4 py-2">
             {menus.map((menu) => (
               <li key={menu.name}>
                 <NavLink to={menu.path} activeclassname="active">
@@ -45,9 +44,6 @@ const Header = () => {
           </ul>
         </nav>
       </header>
-      <div>
-          <span>Current page : {currentPage}</span>
-        </div>
     </>
   );
 };

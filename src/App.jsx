@@ -4,7 +4,7 @@ import { RecoilRoot } from "recoil";
 import { Reset } from "styled-reset";
 
 import "./App.css";
-import "./tailwind.css"
+import "./tailwind.css";
 
 import Home from "@/views/Home";
 import Login from "@/views/Login";
@@ -16,9 +16,11 @@ function App() {
       <Reset />
       <RecoilRoot>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          <Route path="/" element={<Home />}>
+            <Route path="main" element={<Login />} />
+            <Route path="login" element={<Login />} />
+            <Route path="register" element={<Register />} />
+          </Route>
         </Routes>
       </RecoilRoot>
     </Fragment>
