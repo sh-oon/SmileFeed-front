@@ -1,0 +1,23 @@
+{
+  "name": "webrtc-server",
+  "description": "",
+  "scripts": {
+    "start": "node ./server.js",
+    "nodemon": "nodemon --exec babel-node ./server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.16.0",
+    "@babel/core": "^7.16.0",
+    "@babel/node": "^7.16.0",
+    "@babel/preset-env": "^7.16.0",
+    "nodemon": "^2.0.15"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "mongoose": "^6.8.3",
+    "express": "^4.17.1"
+  }
+}
