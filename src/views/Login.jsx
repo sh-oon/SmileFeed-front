@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { loginValid } from "@/services/login.js";
 import styles from "./Login.module.css";
+import { apiRequest } from "../services/common";
 
 const Login = () => {
   const [showAnimation, setShowAnimation] = useState(false);
@@ -12,8 +13,10 @@ const Login = () => {
     setShowAnimation(true);
   }, []);
 
-  const loginSubmit = (arg) => {
+  const loginSubmit = async (arg) => {
     console.log(arg);
+    const res = await apiRequest('get', '/v1/api/login')
+    console.log(res);
     loginValid();
   }
 

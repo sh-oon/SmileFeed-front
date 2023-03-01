@@ -13,8 +13,8 @@ export default defineConfig({
   server: {
     port: 4400,
     proxy: {
-      '/v2/local/': {
-        target: 'https://dapi.kakao.com',
+      '/v1/api/': {
+        target: 'http://localhost:3000',
         changeOrigin: true,
       },
     },
