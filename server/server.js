@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const http = require("http");
 const bodyParser = require("body-parser");
-const mongo = require("./mongo/mongo.js");
+const auth = require("./middleware/auth.js");
 
 const app = express();
 const server = http.createServer(app);
@@ -10,14 +10,10 @@ app.use(bodyParser.json());
 
 const PORT = process.env.PORT || 3000;
 
-const loginRouter = require('./routes/auth.js');
+const loginRouter = require('./routes/authrization.js');
+const test = require('./routes/test.js');
 app.use('/v1/api/auth', loginRouter);
-
-app.get('/v1/api/valid/email', (req, res) => {
-  // 이메일 중복 확인
-  console.log(req.body);
-  
-})
+app.use('/v1/api/test', auth, test);
 
 
 

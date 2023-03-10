@@ -4,6 +4,29 @@
 const router = require('express').Router();
 const jwt = require('jsonwebtoken');
 
-const auth = (req, res, next) => {
+const auth = async (req, res, next) => {
+  const accessToken = req.headers['authorization'].split(' ')[1];
 
+  if (accessToken == null) {
+		res.status(200).json({status: 403, message: 'Authentication fail'});
+	} else {
+		try {
+			const tokenInfo = await new Promise((resolve, reject) => {
+				jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET, 
+					(err, decoded) => {
+						if (err) {
+							reject(err);
+						} else {
+							resolve(decoded);
+						}
+					});
+			});
+			req.tokenInfo = tokenInfo;
+			next();
+		} catch(err) {
+      res.status(200).json({status: 403, message: 'Authentication fail'});
+		}
+	}
 }
+
+module.exports = auth;

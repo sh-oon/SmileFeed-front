@@ -11,6 +11,10 @@ const menus = [
     path: "/",
   },
   {
+    name: "Main",
+    path: "main",
+  },
+  {
     name: "Login",
     path: "login",
   },

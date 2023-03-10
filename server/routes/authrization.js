@@ -15,7 +15,6 @@ router.post("/login", async (req, res) => {
     return response(res, 404, { message: "비밀번호가 일치하지 않습니다." });
 
   const { accessToken, refreshToken } = await generateTokens(user);
-  console.log(accessToken, refreshToken);
   response(res, 200, {
     message: "로그인 성공",
     data: {

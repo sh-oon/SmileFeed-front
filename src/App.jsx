@@ -9,6 +9,7 @@ import "./tailwind.css";
 import Home from "@/views/Home";
 import Login from "@/views/Login";
 import Register from "@/views/Register";
+import Main from "@/views/Main";
 
 function App() {
   return (
@@ -17,7 +18,7 @@ function App() {
       <RecoilRoot>
         <Routes>
           <Route path="/" element={<Home />}>
-            <Route path="main" element={<Login />} />
+            <Route path="main" element={<Main />} />
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
           </Route>

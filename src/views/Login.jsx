@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { loginValid } from "@/services/login.js";
 import styles from "./Login.module.css";
-import { apiRequest } from "../services/common";
+import { apiRequest, setCookie } from "../services/common";
 
 const Login = () => {
   const [showAnimation, setShowAnimation] = useState(false);
@@ -14,10 +14,18 @@ const Login = () => {
   }, []);
 
   const loginSubmit = async (arg) => {
-    console.log(arg);
+    let loginRes = loginValid(arg.email, arg.password);
+    if(!loginRes.success) return alert(loginRes.message)
+
     const res = await apiRequest('post', '/v1/api/auth/login', arg)
-    console.log(res);
-    loginValid();
+    if(res.status === 200) {
+      alert('Login Success');
+      const data = res.data.data;
+      setCookie('accessToken', data.accessToken, 30, 'm');
+      setCookie('refreshToken', data.refreshToken, 7, 'd');
+    } else {
+      alert(res.data.message);
+    }
   }
 
   return (
