@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import styles from './Debouncer.module.css';
 
-function Debouncer({ onChange, delay, placeholder }) {
+function Debouncer({ onChange, delay, placeholder, type }) {
   const [value, setValue] = useState('');
   const [timer, setTimer] = useState(null);
 
@@ -24,7 +24,7 @@ function Debouncer({ onChange, delay, placeholder }) {
   };
 
   return (
-    <input type="text" placeholder={placeholder} className={styles.input} value={value} onChange={handleChange} />
+    <input type={type} placeholder={placeholder} className={styles.input} value={value} onChange={handleChange} />
   );
 }
 

@@ -15,7 +15,7 @@ const Login = () => {
 
   const loginSubmit = async (arg) => {
     console.log(arg);
-    const res = await apiRequest('get', '/v1/api/login')
+    const res = await apiRequest('post', '/v1/api/auth/login')
     console.log(res);
     loginValid();
   }
