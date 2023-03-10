@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const { nanoid } = require("nanoid");
 require("dotenv").config();
+const jwt = require("jsonwebtoken");
 
 // mongoose 연결
 mongoose.set("strictQuery", false);
@@ -42,12 +43,12 @@ const userSchema = new mongoose.Schema({
   mobile: String,
   birth: String,
   gender: String,
+  refreshTokens: [{ token: String, createdAt: { type: Date, expires: '7d', default: Date.now}}],
 });
 
 
 userSchema.pre('save', function (next) {
   let user = this;
-  console.log(user);
   User.findOne({ email: user.email }, function (err, existingUser) {
     if (err) {
       return next(err);
@@ -58,6 +59,22 @@ userSchema.pre('save', function (next) {
     next();
   });
 });
+
+userSchema.methods.generateAuthToken = function () {
+  const token = jwt.sign(
+    {
+      _id: this._id,
+      name: this.name,
+      email: this.email,
+    },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: "7d",
+      // expiresIn: "1h",
+    }
+  );
+  return token;
+}
 
 // mongoose 모델
 const User = mongoose.model("User", userSchema);

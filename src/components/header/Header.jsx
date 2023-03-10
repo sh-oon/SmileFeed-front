@@ -36,7 +36,7 @@ const Header = () => {
     <>
       <header className={styles.header}>
         <nav className="relative">
-          <ul className="flex gap-4 py-2">
+          <ul className="flex gap-8 py-2">
             {menus.map((menu) => (
               <li key={menu.name} 
               className={`${
@@ -50,6 +50,10 @@ const Header = () => {
             ))}
           </ul>
         </nav>
+        <div className="absolute left-0 px-4">
+          <button>User</button>
+          <span>{  }</span>
+        </div>
       </header>
     </>
   );

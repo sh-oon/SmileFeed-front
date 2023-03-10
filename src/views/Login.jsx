@@ -6,7 +6,7 @@ import { apiRequest } from "../services/common";
 
 const Login = () => {
   const [showAnimation, setShowAnimation] = useState(false);
-  const [ID, setID] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   useEffect(() => {
@@ -15,7 +15,7 @@ const Login = () => {
 
   const loginSubmit = async (arg) => {
     console.log(arg);
-    const res = await apiRequest('post', '/v1/api/auth/login')
+    const res = await apiRequest('post', '/v1/api/auth/login', arg)
     console.log(res);
     loginValid();
   }
@@ -33,7 +33,7 @@ const Login = () => {
             id="Email"
             className={styles.input}
             placeholder="Email"
-            onChange={(e)=>{setID(e.target.value)}}
+            onChange={(e)=>{setEmail(e.target.value)}}
           />
           <input
             type="password"
@@ -44,7 +44,7 @@ const Login = () => {
           />
         </div>
         <button className={styles.button} onClick={()=>{
-          loginSubmit({ID, password});
+          loginSubmit({email, password});
         }}>Login</button>
         <div className="flex gap-2">
           <span className="text-xs">Don't have an account?</span>
