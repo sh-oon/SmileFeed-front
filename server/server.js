@@ -3,10 +3,12 @@ const express = require("express");
 const http = require("http");
 const bodyParser = require("body-parser");
 const auth = require("./middleware/auth.js");
+const cors = require("cors")
 
 const app = express();
 const server = http.createServer(app);
 app.use(bodyParser.json());
+app.use(cors({origin: 'https://diary-vlog.herokuapp.com', credentials: true}))
 
 const PORT = process.env.PORT || 3000;
 
