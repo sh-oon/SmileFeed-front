@@ -11,9 +11,9 @@ app.use(bodyParser.json());
 const PORT = process.env.PORT || 3000;
 
 const loginRouter = require('./routes/authrization.js');
-const test = require('./routes/test.js');
+const user = require('./routes/user.js');
 app.use('/v1/api/auth', loginRouter);
-app.use('/v1/api/test', auth, test);
+app.use('/v1/api/user', auth, user);
 
 
 

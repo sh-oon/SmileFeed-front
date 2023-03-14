@@ -21,7 +21,7 @@ const Login = () => {
     if(res.status === 200) {
       alert('Login Success');
       const data = res.data.data;
-      setCookie('accessToken', data.accessToken, 30, 'm');
+      setCookie('accessToken', data.accessToken, 30, 's');
       setCookie('refreshToken', data.refreshToken, 7, 'd');
     } else {
       alert(res.data.message);

@@ -1,7 +1,8 @@
 import { useEffect } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { currentPageState } from "@/store/menu-store.jsx";
+import { currentUserState } from "@/store/user-store.jsx";
 
 import styles from "./Header.module.css";
 
@@ -24,9 +25,8 @@ const menus = [
   },
 ];
 
-const Header = () => {
+const Header = ({user}) => {
   const [currentPage, setCurrentPage] = useRecoilState(currentPageState);
-  const location = useLocation();
 
   useEffect(() => {
     if (location.pathname === "/") {
@@ -34,6 +34,7 @@ const Header = () => {
     } else {
       setCurrentPage(location.pathname.slice(1));
     }
+
   }, [location.pathname, setCurrentPage]);
 
   return (
@@ -46,6 +47,7 @@ const Header = () => {
               className={`${
                 currentPage === menu.path ? styles.active : ""
               } ${currentPage === 'Home' && menu.path === '/' ? styles.active : ""} ${styles.menu}`}
+              onClick={() => setCurrentPage(menu.path)}
               >
                 <NavLink to={menu.path} activeclassname={styles.active}>
                   {menu.name}
@@ -55,8 +57,8 @@ const Header = () => {
           </ul>
         </nav>
         <div className="absolute left-0 px-4">
-          <button>User</button>
-          <span>{  }</span>
+          <button>{ user }</button>
+          <span>님 환영합니다.</span>
         </div>
       </header>
     </>

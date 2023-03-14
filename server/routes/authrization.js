@@ -20,7 +20,8 @@ router.post("/login", async (req, res) => {
     data: {
       accessToken,
       refreshToken,
-      expiresIn: 30 * 60 * 1000,
+      // expiresIn: 30 * 60 * 1000,
+      expiresIn: 30 * 1000,
     },
   });
 });
@@ -31,7 +32,7 @@ router.post("/register", (req, res) => {
     email: userData.email,
     password: userData.password,
     name: userData.name,
-    mobile: userData.mobile,
+    mobile: userData.phone,
     birth: userData.birth,
     gender: userData.gender,
   });
@@ -48,12 +49,31 @@ router.post("/register", (req, res) => {
     });
 });
 
+router.post("/refresh", async (req, res) => {
+  const { refreshToken } = req.body;
+  if (!refreshToken) return response(res, 401, { message: "로그인이 필요합니다." });
+  const user = await mongo.User.findOne({
+    refreshTokens: { $elemMatch: { token: refreshToken } },
+  });
+  if (!user) return response(res, 403, { message: "유효하지 않은 토큰입니다." });
+  const { accessToken, refreshToken: newRefreshToken } = await generateTokens(
+    user
+  );
+  response(res, 200, {
+    message: "토큰 갱신 성공",
+    data: {
+      accessToken,
+      refreshToken: newRefreshToken,
+      // expiresIn: 30 * 60 * 1000,
+      expiresIn: 30 * 1000,
+    },
+  });
+});
+
 const generateTokens = async (user) => {
   const accessToken = jwt.sign(
     {
       _id: user._id,
-      name: user.name,
-      email: user.email,
     },
     process.env.ACCESS_TOKEN_SECRET,
     { expiresIn: "30m" }
@@ -61,8 +81,6 @@ const generateTokens = async (user) => {
   const refreshToken = jwt.sign(
     {
       _id: user._id,
-      name: user.name,
-      email: user.email,
     },
     process.env.REFRESH_TOKEN_SECRET,
     { expiresIn: "7d" }

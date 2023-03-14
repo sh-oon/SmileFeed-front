@@ -8,7 +8,7 @@ const auth = async (req, res, next) => {
   const accessToken = req.headers['authorization'].split(' ')[1];
 
   if (accessToken == null) {
-		res.status(200).json({status: 403, message: 'Authentication fail'});
+		res.status(401).json({status: 403, message: 'Authentication fail'});
 	} else {
 		try {
 			const tokenInfo = await new Promise((resolve, reject) => {
@@ -24,7 +24,7 @@ const auth = async (req, res, next) => {
 			req.tokenInfo = tokenInfo;
 			next();
 		} catch(err) {
-      res.status(200).json({status: 403, message: 'Authentication fail'});
+      res.status(401).json({status: 401, message: '토근이 만료되었습니다.'});
 		}
 	}
 }
