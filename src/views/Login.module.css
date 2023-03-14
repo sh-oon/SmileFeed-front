@@ -1,0 +1,31 @@
+@import '@/index.css';
+
+.loginWrap {
+  @apply shadow-2xl w-full flex flex-col items-center justify-center p-4 rounded-md gap-4
+  md:w-3/12 md:py-12
+  ;
+  background-color: var(--color-bg-light);
+  transition: opacity 0.3s ease-in-out;
+}
+
+.input {
+  @apply w-full rounded-md p-4;
+  background-color: var(--color-bg);
+}
+
+.input:placeholder-shown {
+  @apply text-gray-400;
+}
+
+.button {
+  @apply w-full rounded-md p-4 bg-blue-500 text-white font-bold;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.button:hover {
+  @apply bg-blue-600;
+}
+
+.button:active {
+  @apply md:bg-blue-700;
+}
