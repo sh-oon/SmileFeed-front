@@ -14,7 +14,8 @@ export default defineConfig({
     port: 4400,
     proxy: {
       '/v1/api/': {
-        target: 'http://localhost:3000',
+        // target: 'http://localhost:3000',
+        target: 'https://smile-feed-server.herokuapp.com',
         changeOrigin: true,
       },
     },

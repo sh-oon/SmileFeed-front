@@ -1,13 +1,17 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { loginValid } from "@/services/login.js";
 import styles from "./Login.module.css";
 import { apiRequest, setCookie } from "../services/common";
+import { useRecoilState } from "recoil";
+import { currentUserState } from "@/store/user-store.jsx";
 
 const Login = () => {
+  const [userData, setUserData] = useRecoilState(currentUserState);
   const [showAnimation, setShowAnimation] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     setShowAnimation(true);
@@ -23,6 +27,10 @@ const Login = () => {
       const data = res.data.data;
       setCookie('accessToken', data.accessToken, 30, 's');
       setCookie('refreshToken', data.refreshToken, 7, 'd');
+      const user = await apiRequest('post', '/v1/api/user/profile')
+      setUserData(user.data.data)
+      if(user.status === 200)
+        navigate('/main')
     } else {
       alert(res.data.message);
     }

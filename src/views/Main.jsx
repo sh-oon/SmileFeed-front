@@ -8,8 +8,9 @@ const Main = () => {
     <>
       <section>
         <button onClick={async (e) => {
-          await apiRequest('post', '/v1/api/user/profile')
-          console.log(userData);
+          let res = await apiRequest('post', '/v1/api/user/profile')
+          console.log(res.data);
+          setUserData(res.data.data)
         }}>프로필 조회 버튼</button>
       </section>
     </>
