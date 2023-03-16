@@ -2,7 +2,8 @@ import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { currentPageState } from "@/store/menu-store.jsx";
-import { currentUserState } from "@/store/user-store.jsx";
+import { AiOutlineUser } from "react-icons/ai";
+import { iconSize } from "@/services/utils";
 
 import styles from "./Header.module.css";
 
@@ -15,17 +16,9 @@ const menus = [
     name: "Main",
     path: "main",
   },
-  {
-    name: "Login",
-    path: "login",
-  },
-  {
-    name: "Register",
-    path: "register",
-  },
 ];
 
-const Header = ({user}) => {
+const Header = ({ user, isLogin }) => {
   const [currentPage, setCurrentPage] = useRecoilState(currentPageState);
 
   useEffect(() => {
@@ -34,7 +27,6 @@ const Header = ({user}) => {
     } else {
       setCurrentPage(location.pathname.slice(1));
     }
-
   }, [location.pathname, setCurrentPage]);
 
   return (
@@ -43,11 +35,14 @@ const Header = ({user}) => {
         <nav className="relative">
           <ul className="flex gap-8 py-2">
             {menus.map((menu) => (
-              <li key={menu.name} 
-              className={`${
-                currentPage === menu.path ? styles.active : ""
-              } ${currentPage === 'Home' && menu.path === '/' ? styles.active : ""} ${styles.menu}`}
-              onClick={() => setCurrentPage(menu.path)}
+              <li
+                key={menu.name}
+                className={`${currentPage === menu.path ? styles.active : ""} ${
+                  currentPage === "Home" && menu.path === "/"
+                    ? styles.active
+                    : ""
+                } ${styles.menu}`}
+                onClick={() => setCurrentPage(menu.path)}
               >
                 <NavLink to={menu.path} activeclassname={styles.active}>
                   {menu.name}
@@ -56,9 +51,16 @@ const Header = ({user}) => {
             ))}
           </ul>
         </nav>
-        <div className="absolute left-0 px-4">
-          <button>{ user }</button>
-          <span>님 환영합니다.</span>
+        <div className="absolute md:right-0 left-0 p-2 px-4">
+          {!isLogin ? (
+            <span className={styles.menu}>
+              <NavLink to="/login" activeclassname={styles.active}>
+                Login
+              </NavLink>
+            </span>
+          ) : (
+            <AiOutlineUser size={iconSize} />
+          )}
         </div>
       </header>
     </>

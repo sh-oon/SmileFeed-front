@@ -623,31 +623,6 @@ code {
   height: 100%;
 }
 
-.bg {
-  position: fixed;
-  top: 0px;
-  left: 0px;
-  height: 100%;
-  width: 100%;
-  background-position: center;
-  background-repeat: no-repeat;
-  -o-object-fit: cover;
-     object-fit: cover;
-}
-
-@media (min-width: 768px) {
-  .bg {
-    height: 50%;
-    width: 100%;
-    background-position: center;
-    background-repeat: no-repeat;
-    -o-object-fit: cover;
-       object-fit: cover;
-    --tw-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
-    --tw-shadow-colored: 0 25px 50px -12px var(--tw-shadow-color);
-    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-  }
-}
 
 .square:after {
   content: "";

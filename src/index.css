@@ -37,7 +37,7 @@ code {
 }
 
 .bg {
-  @apply md:h-1/2 md:w-full md:object-cover md:bg-center md:bg-no-repeat md:shadow-2xl
+  @apply sm:h-1/2 sm:w-full sm:object-cover sm:bg-center sm:bg-no-repeat sm:shadow-2xl
   h-full w-full object-cover bg-center bg-no-repeat fixed top-0 left-0;
 }
 

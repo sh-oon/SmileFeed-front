@@ -27,7 +27,7 @@ const Login = () => {
       const data = res.data.data;
       setCookie('accessToken', data.accessToken, 30, 's');
       setCookie('refreshToken', data.refreshToken, 7, 'd');
-      const user = await apiRequest('post', '/v1/api/user/profile')
+      const user = await apiRequest('get', '/v1/api/user/profile')
       setUserData(user.data.data)
       if(user.status === 200)
         navigate('/main')
