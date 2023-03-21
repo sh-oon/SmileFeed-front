@@ -1,4 +1,4 @@
-import Debouncer from "../Debouncer";
+import Debouncer from "../../components/Debouncer";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Setting.module.css";

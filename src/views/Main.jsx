@@ -4,6 +4,7 @@ import { currentUserState } from "@/store/user-store.jsx";
 import { AiFillPlusCircle } from "react-icons/ai";
 import { RiListSettingsLine } from "react-icons/ri";
 import { iconSize } from "@/services/utils";
+import { NavLink } from "react-router-dom";
 
 const Main = () => {
   const [userData, setUserData] = useRecoilState(currentUserState);
@@ -50,7 +51,9 @@ const Main = () => {
             console.log("설정 페이지 오픈");
           }}
         >
-          <RiListSettingsLine size={iconSize}></RiListSettingsLine>
+          <NavLink to='/setting'>
+            <RiListSettingsLine size={iconSize}></RiListSettingsLine>
+          </NavLink>
         </button>
         <button
           className="absolute left-1/2 -translate-x-1/2"
