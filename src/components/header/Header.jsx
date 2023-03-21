@@ -59,7 +59,11 @@ const Header = ({ user, isLogin }) => {
               </NavLink>
             </span>
           ) : (
-            <AiOutlineUser size={iconSize} />
+            <>
+              <span>
+                <AiOutlineUser size={iconSize} />
+              </span>
+            </>
           )}
         </div>
       </header>

@@ -22,6 +22,7 @@ function App() {
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
           </Route>
+          <Route path="*" element={<div>Not Found</div>} />
         </Routes>
       </RecoilRoot>
     </Fragment>

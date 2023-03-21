@@ -9,7 +9,7 @@
 }
 
 .contents {
-  @apply z-10 w-full h-full relative px-4 flex items-center justify-center;
+  @apply w-full h-full relative px-4 flex items-center justify-center;
 }
 
 input::-webkit-inner-spin-button {
