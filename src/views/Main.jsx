@@ -1,13 +1,17 @@
+import { useState } from "react";
 import { apiRequest } from "@/services/common";
 import { useRecoilState } from "recoil";
 import { currentUserState } from "@/store/user-store.jsx";
 import { AiFillPlusCircle } from "react-icons/ai";
 import { RiListSettingsLine } from "react-icons/ri";
 import { iconSize } from "@/services/utils";
-import { NavLink } from "react-router-dom";
+
+import SettingsModal from "../components/settings/Setting";
+import ModalPortal from "@/components/ModalPortal.jsx";
 
 const Main = () => {
   const [userData, setUserData] = useRecoilState(currentUserState);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   return (
     <>
       <section className="flex flex-col gap-4">
@@ -48,12 +52,11 @@ const Main = () => {
         <button
           className="mr-auto border-2 rounded-2xl p-1"
           onClick={() => {
+            setIsModalOpen(true);
             console.log("설정 페이지 오픈");
           }}
         >
-          <NavLink to='/setting'>
-            <RiListSettingsLine size={iconSize}></RiListSettingsLine>
-          </NavLink>
+          <RiListSettingsLine size={iconSize}></RiListSettingsLine>
         </button>
         <button
           className="absolute left-1/2 -translate-x-1/2"
@@ -64,6 +67,11 @@ const Main = () => {
           <AiFillPlusCircle size={48}></AiFillPlusCircle>
         </button>
       </div>
+      {isModalOpen && (
+        <ModalPortal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+          <SettingsModal />
+        </ModalPortal>
+      )}
     </>
   );
 };

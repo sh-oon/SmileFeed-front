@@ -48,20 +48,22 @@ axios.interceptors.response.use(
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       const refreshToken = getCookie("refreshToken");
-      const res = await apiRequest("post", "/v1/api/auth/refresh", {
-        refreshToken: refreshToken,
-      });
-      if (res.status === 200) {
-        setCookie("accessToken", res.data.data.accessToken, 30, "m");
-        setCookie("refreshToken", res.data.data.refreshToken, 7, "d");
-        axios.defaults.headers.common["Authorization"] =
-          "Bearer " + getCookie("accessToken");
-        return axios(originalRequest);
-      } else if (res.status === 403) {
-        deleteCookie("accessToken");
-        deleteCookie("refreshToken");
-        alert("세션이 만료되었습니다. 다시 로그인해주세요.");
-        window.location.href = "/login";
+      if (refreshToken) {
+        const res = await apiRequest("post", "/v1/api/auth/refresh", {
+          refreshToken: refreshToken,
+        });
+        if (res.status === 200) {
+          setCookie("accessToken", res.data.data.accessToken, 30, "m");
+          setCookie("refreshToken", res.data.data.refreshToken, 7, "d");
+          axios.defaults.headers.common["Authorization"] =
+            "Bearer " + getCookie("accessToken");
+          return axios(originalRequest);
+        } else if (res.status === 401) {
+          deleteCookie("accessToken");
+          deleteCookie("refreshToken");
+          alert("세션이 만료되었습니다. 다시 로그인해주세요.");
+          window.location.href = "/login";
+        }
       }
     }
     return Promise.reject(error);

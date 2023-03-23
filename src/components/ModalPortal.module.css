@@ -1,0 +1,55 @@
+.modalWrapper {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-bg);
+    z-index: 999;
+}
+
+.modalShowAnimation {
+    animation: modalRightToLeft 0.5s;
+}
+
+.modalHideAnimation {
+    animation: modalLeftToRight 0.5s;
+}
+
+.modalClose {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 30px;
+    height: 30px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 30px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.modalClose:hover {
+    background: #ccc;
+}
+
+@keyframes modalRightToLeft {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+@keyframes modalLeftToRight {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}

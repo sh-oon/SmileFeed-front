@@ -10,7 +10,6 @@ import Home from "@/views/Home";
 import Login from "@/views/Login";
 import Register from "@/views/Register";
 import Main from "@/views/Main";
-import Setting from "@/views/settings/Setting"
 
 function App() {
   return (
@@ -22,7 +21,6 @@ function App() {
             <Route path="main" element={<Main />} />
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
-            <Route path="setting" element={<Setting/>} />
           </Route>
           <Route path="*" element={<div>Not Found</div>} />
         </Routes>
