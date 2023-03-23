@@ -16,6 +16,10 @@ const menus = [
     name: "Main",
     path: "main",
   },
+  {
+    name: "Setting",
+    path: "setting",
+  }
 ];
 
 const Header = ({ user, isLogin }) => {
@@ -32,7 +36,7 @@ const Header = ({ user, isLogin }) => {
   return (
     <>
       <header className={styles.header}>
-        <nav className="relative">
+        <nav className="relative z-50">
           <ul className="flex gap-8 py-2">
             {menus.map((menu) => (
               <li
