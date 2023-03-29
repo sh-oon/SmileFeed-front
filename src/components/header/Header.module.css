@@ -1,16 +1,6 @@
 @import '@/index.css';
 
-.header {
-  background-color: var(--color-bg);
-  text-align: center;
-  @apply flex w-full justify-center items-center p-4 relative top-0 z-50;
-}
-
 .active {
   color: var(--color-point);
   transition: all 0.3s ease;
-}
-
-.menu {
-  @apply hover:text-[#ffeba7] transition-all
 }

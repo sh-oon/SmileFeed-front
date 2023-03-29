@@ -61,7 +61,7 @@ const Calendar = () => {
       <Swiper
         direction={"vertical"}
         slidesPerView={1}
-        spaceBetween={30}
+        spaceBetween={0}
         modules={[Mousewheel]}
         className={styles.mySwiper}
         onSlideChange={() => {

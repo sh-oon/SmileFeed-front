@@ -1,8 +1,8 @@
 import Debouncer from "../components/Debouncer";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import styles from "./Login.module.css";
-import { apiRequest } from "../services/common";
+import { apiRequest } from "@/services/common";
+import { FormWrapper, InputText } from "@/styled/common";
 
 const registerForm = [
   {
@@ -112,8 +112,8 @@ const Register = () => {
   };
   return (
     <>
-      <div
-        className={`${styles.loginWrap} ${
+      <FormWrapper
+        className={`${
           showAnimation ? "opacity" : "opacity-0"
         }`}
       >
@@ -163,7 +163,7 @@ const Register = () => {
             <span>Gender</span>
             <div className="flex gap-2">
               <div className="flex items-center gap-2">
-                <input
+                <InputText
                   type="radio"
                   name="gender"
                   value={1}
@@ -175,7 +175,7 @@ const Register = () => {
                 <label htmlFor="radio-man">Man</label>
               </div>
               <div className="flex items-center gap-2">
-                <input
+                <InputText
                   type="radio"
                   name="gender"
                   value={2}
@@ -197,7 +197,7 @@ const Register = () => {
             Submit
           </button>
         </form>
-      </div>
+      </FormWrapper>
     </>
   );
 };

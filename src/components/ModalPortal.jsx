@@ -35,7 +35,7 @@ const SettingsModal = ({ isOpen, onClose, children }) => {
             <button className={styles.modalClose} onClick={handleClose}>
               <AiOutlineClose size={iconSize}></AiOutlineClose>
             </button>
-            <div className="relative">{children}</div>
+            <div className="relative w-full h-full">{children}</div>
           </section>,
           document.getElementById("portal")
         )}

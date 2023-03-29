@@ -6,6 +6,8 @@ import { AiOutlineUser } from "react-icons/ai";
 import { iconSize } from "@/services/utils";
 
 import styles from "./Header.module.css";
+import styled from "styled-components";
+import { colorPallet } from "@/styled/common";
 
 const menus = [
   {
@@ -19,7 +21,7 @@ const menus = [
   {
     name: "Setting",
     path: "setting",
-  }
+  },
 ];
 
 const Header = ({ user, isLogin }) => {
@@ -35,7 +37,7 @@ const Header = ({ user, isLogin }) => {
 
   return (
     <>
-      <header className={styles.header}>
+      <HeaderWrapper>
         <nav className="relative z-50">
           <ul className="flex gap-8 py-2">
             {menus.map((menu) => (
@@ -57,11 +59,11 @@ const Header = ({ user, isLogin }) => {
         </nav>
         <div className="absolute md:right-0 left-0 p-2 px-4">
           {!isLogin ? (
-            <span className={styles.menu}>
+            <Menu>
               <NavLink to="/login" activeclassname={styles.active}>
                 Login
               </NavLink>
-            </span>
+            </Menu>
           ) : (
             <>
               <span>
@@ -70,9 +72,31 @@ const Header = ({ user, isLogin }) => {
             </>
           )}
         </div>
-      </header>
+      </HeaderWrapper>
     </>
   );
 };
+
+const HeaderWrapper = styled.header`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: ${colorPallet.bg};
+  z-index: 100;
+  text-align: center;
+  position: fixed;
+  padding: 1rem;
+`;
+
+const Menu = styled.span`
+  transition: all 0.3s ease-in-out;
+  &:hover {
+    color: #ffeba7;
+  }
+`;
 
 export default Header;

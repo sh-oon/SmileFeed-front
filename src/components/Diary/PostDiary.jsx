@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { Container } from '@/styled/common';
 
 const PostDiaryModal = ({settings}) => {
   useEffect(() => {
@@ -6,9 +7,11 @@ const PostDiaryModal = ({settings}) => {
   }, [settings]);
   return (
     <>
-      <div className='w-full flex flex-col'>
-        <span>일기 등록</span>
-      </div>
+      <Container className='p-4'>
+        <div className='border w-full h-14'>
+          하이
+        </div>
+      </Container>
     </>
   );
 };
