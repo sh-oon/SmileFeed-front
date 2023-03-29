@@ -9,10 +9,10 @@ import { AiFillPlusCircle } from "react-icons/ai";
 import { RiListSettingsLine } from "react-icons/ri";
 import { iconSize } from "@/services/utils";
 
-import SettingsModal from "../components/settings/Setting";
-import PostDiaryModal from "../components/Diary/PostDiary";
+import SettingsModal from "@/components/modal/Settings";
+import PostDiaryModal from "@/components/modal/PostDiary";
 import ModalPortal from "@/components/ModalPortal.jsx";
-import Calendar from "../components/calender/Calender";
+import Calendar from "@/components/modal/Calender";
 
 const Main = () => {
   const [settings, setSettings] = useRecoilState(currentUserSettingState);
