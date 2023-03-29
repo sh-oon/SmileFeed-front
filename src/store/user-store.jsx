@@ -10,3 +10,16 @@ export const currentUserState = atom({
     gender: '',
   },
 });
+
+export const currentUserSettingState = atom({
+  key: 'userSettingState',
+  default: {
+    alert: false,
+    backgroundColor: "#ffffff",
+    font: "Noto Sans KR",
+    fontSize: 14,
+    passwordLock: false,
+    syncronize: false,
+    theme: "light",
+  }
+});

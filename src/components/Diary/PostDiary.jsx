@@ -1,17 +1,16 @@
-import styes from './Setting.module.css';
 import { useEffect } from 'react';
 
-const SettingsModal = ({settings}) => {
+const PostDiaryModal = ({settings}) => {
   useEffect(() => {
     console.log(settings);
   }, [settings]);
   return (
     <>
       <div className='w-full flex flex-col'>
-        <span>{settings.backgroundColor}</span>
+        <span>일기 등록</span>
       </div>
     </>
   );
 };
 
-export default SettingsModal;
+export default PostDiaryModal;

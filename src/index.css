@@ -2,6 +2,17 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+/* Font */
+/* yoon 감자꽃 */
+@import url('https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap');
+/* Neo 둥근고딕 Pro */
+@font-face {
+  font-family: 'NeoDunggeunmoPro-Regular';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/NeoDunggeunmoPro-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
 /* MAIN COLORS */
 :root {
   --color-bg: #1f2029;

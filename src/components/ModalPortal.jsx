@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import styles from "@/components/ModalPortal.module.css";
+import { iconSize } from "@/services/utils";
+import { AiOutlineClose } from "react-icons/ai";
 
 const SettingsModal = ({ isOpen, onClose, children }) => {
   const [isModalOpen, setIsModalOpen] = useState(isOpen);
@@ -31,7 +33,7 @@ const SettingsModal = ({ isOpen, onClose, children }) => {
             }`}
           >
             <button className={styles.modalClose} onClick={handleClose}>
-              X
+              <AiOutlineClose size={iconSize}></AiOutlineClose>
             </button>
             <div className="relative">{children}</div>
           </section>,

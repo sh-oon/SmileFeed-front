@@ -58,7 +58,7 @@ axios.interceptors.response.use(
           axios.defaults.headers.common["Authorization"] =
             "Bearer " + getCookie("accessToken");
           return axios(originalRequest);
-        } else if (res.status === 401) {
+        } else if (res.status === 403) {
           deleteCookie("accessToken");
           deleteCookie("refreshToken");
           alert("세션이 만료되었습니다. 다시 로그인해주세요.");

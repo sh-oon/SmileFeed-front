@@ -8,8 +8,7 @@ const Setting = () => {
   return (
     <>
       <section className='w-full flex flex-col items-center'>
-        <h2>gadsfaf</h2>
-        <div>asdfa</div>
+        
       </section>
     </>
   );
