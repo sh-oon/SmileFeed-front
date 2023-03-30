@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
-import styles from "@/components/ModalPortal.module.css";
+import styles from "@/components/portal/ModalPortal.module.css";
 import { iconSize } from "@/services/utils";
 import { AiOutlineClose } from "react-icons/ai";
 

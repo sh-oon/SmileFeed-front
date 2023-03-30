@@ -9,35 +9,38 @@ import { AiFillPlusCircle } from "react-icons/ai";
 import { RiListSettingsLine } from "react-icons/ri";
 import { iconSize } from "@/services/utils";
 
-import SettingsModal from "@/components/modal/Settings";
+import SettingsModal from "@/components/modal/Setting";
 import PostDiaryModal from "@/components/modal/PostDiary";
-import ModalPortal from "@/components/ModalPortal.jsx";
-import Calendar from "@/components/modal/Calender";
+import SpinEmotionModal from "@/components/modal/SpinEmotion";
+import ModalPortal from "@/components/portal/ModalPortal.jsx";
+import AlertPortal from "@/components/portal/AlertPortal.jsx";
+import Calendar from "@/components/calender/Calender";
 
 const Main = () => {
   const [settings, setSettings] = useRecoilState(currentUserSettingState);
-
-  useEffect(() => {
-    function getSetting() {
-      apiRequest("get", "v1/api/user/setting").then((res) => {
-        setSettings({
-          ...settings,
-          alert: res.data.data.alert,
-          backgroundColor: res.data.data.backgroundColor,
-          font: res.data.data.font,
-          fontSize: res.data.data.fontSize,
-          passwordLock: res.data.data.passwordLock,
-          syncronize: res.data.data.syncronize,
-          theme: res.data.data.theme,
-        });
-      });
-    }
-
-    getSetting();
-  }, []);
-
   const [userData, setUserData] = useRecoilState(currentUserState);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  async function getSettingOpenModal() {
+    const res = await apiRequest("get", "v1/api/user/setting");
+    if(res.status !== 200) return alert(res.data.message);
+    setSettings({
+      ...settings,
+      alert: res.data.data.alert,
+      backgroundColor: res.data.data.backgroundColor,
+      font: res.data.data.font,
+      fontSize: res.data.data.fontSize,
+      passwordLock: res.data.data.passwordLock,
+      syncronize: res.data.data.syncronize,
+      theme: res.data.data.theme,
+    });
+    setIsModalOpen("setting");
+  }
+
+  function selectTodayEmotion() {
+    console.log("오늘의 감정 선택");
+  }
+
   return (
     <>
       <section className="flex flex-col gap-4 w-full h-full">
@@ -47,8 +50,7 @@ const Main = () => {
         <button
           className="mr-auto border-2 rounded-2xl p-1"
           onClick={() => {
-            setIsModalOpen('setting');
-            console.log("설정 페이지 오픈");
+            getSettingOpenModal();
           }}
         >
           <RiListSettingsLine size={iconSize}></RiListSettingsLine>
@@ -56,20 +58,20 @@ const Main = () => {
         <button
           className="absolute left-1/2 -translate-x-1/2"
           onClick={() => {
-            setIsModalOpen('diary');
+            setIsModalOpen("diary");
             console.log("일기 등록 페이지 오픈");
           }}
         >
           <AiFillPlusCircle size={48}></AiFillPlusCircle>
         </button>
       </div>
-      {isModalOpen === 'setting' ? (
+      {isModalOpen === "setting" ? (
         <ModalPortal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
           <SettingsModal settings={settings} />
         </ModalPortal>
       ) : (
         <ModalPortal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-          <PostDiaryModal settings={settings} />
+          <SpinEmotionModal settings={settings} onClose={() => setIsModalOpen(false)} />
         </ModalPortal>
       )}
     </>

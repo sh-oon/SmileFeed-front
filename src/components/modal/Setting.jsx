@@ -1,4 +1,3 @@
-import styes from './Setting.module.css';
 import { useEffect } from 'react';
 
 const SettingsModal = ({settings}) => {
