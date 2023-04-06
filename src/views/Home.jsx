@@ -2,7 +2,9 @@ import { Outlet } from "react-router-dom";
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { currentUserState } from "@/store/user-store.jsx";
+import { loadingState } from "@/store/menu-store.jsx";
 import { apiRequest, getCookie } from "@/services/common";
+
 
 
 import styles from "./Home.module.css";
@@ -10,6 +12,8 @@ import Header from "@/components/header/Header.jsx";
 
 const Home = () => {
   const [userData, setUserData] = useRecoilState(currentUserState);
+  const [loadState, setLoadingState] = useRecoilState(loadingState);
+
   let tried = false;
   useEffect(() => {
     async function getUser() {

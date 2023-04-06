@@ -1,60 +1,52 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
-import { Swiper, SwiperSlide } from "swiper/react";
+import { Virtual } from "swiper";
+import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
 import "swiper/css";
-import "swiper/css/scrollbar";
-// import "./Calender.module.css";
 import styles from "./Calender.module.css";
 
 import { Mousewheel } from "swiper";
+import { apiRequest } from "../../services/common";
+import { loadingState } from "../../store/menu-store";
+import { useRecoilState } from "recoil";
+
+import Loading from "../portal/Loading";
 
 const Calendar = () => {
-  const [selectedDate, setSelectedDate] = useState(new Date());
-  const [currentDate, setCurrentDate] = useState(new Date().getDate());
+  const [feeds, setFeeds] = useState([]);
+  const [loadState, setLoadingState] = useRecoilState(loadingState);
+  const swiper = useSwiper();
 
-  const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  const daysInMonth = new Date(
-    selectedDate.getFullYear(),
-    selectedDate.getMonth() + 1,
-    0
-  ).getDate();
-  const startDayOfMonth = new Date(
-    selectedDate.getFullYear(),
-    selectedDate.getMonth(),
-    1
-  ).getDay();
-  const endDayOfMonth = new Date(
-    selectedDate.getFullYear(),
-    selectedDate.getMonth(),
-    daysInMonth
-  ).getDay();
+  useEffect(() => {
+    async function getFeeds() {
+      setLoadingState(true);
+      const res = await apiRequest("GET", "v1/api/feed/diary");
 
-  const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
-  const prevMonthDays = Array.from(
-    { length: startDayOfMonth },
-    (_, i) => -i - 1
-  ).reverse();
-  const nextMonthDays = Array.from(
-    { length: 6 - endDayOfMonth },
-    (_, i) => i + 1
-  );
+      if (res.status === 200) {
+        const data = res.data.data;
+        // const feeds = [data.prevMonthFeeds, data.currentMonthFeeds, data.nextMonthFeeds];
+        const result = [];
+        // feed를 월별로 나누기
+        data.forEach((feed) => {
+          const month = feed.date.split("-")[1];
+          const index = result.findIndex((feed) => feed.month === month);
+          if (index === -1) {
+            result.push({ month: month, data: [feed] });
+          } else {
+            result[index].data.push(feed);
+          }
+        });
+        result.sort((a, b) => a.month - b.month);
+        setFeeds(result);
+      } else {
+        console.log("error");
+      }
+      setLoadingState(false);
+    }
 
-  const allDays = [...prevMonthDays, ...days, ...nextMonthDays];
-
-  const handlePrevMonth = () => {
-    setSelectedDate(
-      new Date(selectedDate.getFullYear(), selectedDate.getMonth() - 1, 1)
-    );
-    console.log(selectedDate);
-  };
-
-  const handleNextMonth = () => {
-    setSelectedDate(
-      new Date(selectedDate.getFullYear(), selectedDate.getMonth() + 1, 1)
-    );
-    console.log(selectedDate);
-  };
+    getFeeds();
+  }, [swiper]);
 
   return (
     <>
@@ -62,46 +54,38 @@ const Calendar = () => {
         direction={"vertical"}
         slidesPerView={1}
         spaceBetween={0}
-        modules={[Mousewheel]}
+        modules={[Mousewheel, Virtual]}
         className={styles.mySwiper}
-        onSlideChange={() => {
+        virtual
+        onSlideChange={(e) => {
           console.log("slide change");
         }}
       >
-        {daysOfWeek.map((day) => (
-          <SwiperSlide key={day}>
-            <CalendarWrapper>
-              <div className="flex justify-between items-center mb-4 w-full">
-                <button onClick={handlePrevMonth}>Prev</button>
-                <h2>
-                  {selectedDate.toLocaleString("default", {
-                    month: "long",
-                    year: "numeric",
+        {feeds.map((feed, index) => {
+          return (
+            <SwiperSlide key={index} virtualIndex={index}>
+              <CalendarWrapper>
+                <div className={styles.month}>{feed.month}월</div>
+                <div className={styles.days}>
+                  {feed.data.map((feed, index) => {
+                    return (
+                      <div className={styles.day} key={index}>
+                        <div className={styles.date}>
+                          {feed.date.split("-")[2]}
+                        </div>
+                        <div className={styles.emotion}>{feed.emotion}</div>
+                        <div className={styles.content}>{feed.content}</div>
+                      </div>
+                    );
                   })}
-                </h2>
-                <button onClick={handleNextMonth}>Next</button>
-              </div>
-              <div className="grid grid-cols-7 gap-8">
-                {daysOfWeek.map((day) => (
-                  <div key={day}>{day}</div>
-                ))}
-                {allDays.map((day, i) => (
-                  <div
-                    key={i}
-                    className={`text-center ${
-                      day === currentDate
-                        ? "bg-blue-500 text-white rounded-full"
-                        : ""
-                    }`}
-                  >
-                    {day > 0 ? day : ""}
-                  </div>
-                ))}
-              </div>
-            </CalendarWrapper>
-          </SwiperSlide>
-        ))}
+                </div>
+              </CalendarWrapper>
+            </SwiperSlide>
+          );
+        })}
       </Swiper>
+
+      <Loading />
     </>
   );
 };

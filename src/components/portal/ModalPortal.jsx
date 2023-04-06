@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import styles from "@/components/portal/ModalPortal.module.css";
 import { iconSize } from "@/services/utils";
@@ -35,7 +35,9 @@ const SettingsModal = ({ isOpen, onClose, children }) => {
             <button className={styles.modalClose} onClick={handleClose}>
               <AiOutlineClose size={iconSize}></AiOutlineClose>
             </button>
-            <div className="relative w-full h-full">{children}</div>
+            <div className="relative w-full h-full">
+              {React.cloneElement(children, { onClose: handleClose })}
+              </div>
           </section>,
           document.getElementById("portal")
         )}

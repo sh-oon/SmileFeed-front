@@ -5,41 +5,56 @@ import {
   currentUserState,
   currentUserSettingState,
 } from "@/store/user-store.jsx";
+import { loadingState } from "@/store/menu-store";
 import { AiFillPlusCircle } from "react-icons/ai";
 import { RiListSettingsLine } from "react-icons/ri";
 import { iconSize } from "@/services/utils";
 
 import SettingsModal from "@/components/modal/Setting";
 import PostDiaryModal from "@/components/modal/PostDiary";
-import SpinEmotionModal from "@/components/modal/SpinEmotion";
+import SelecttEmotionModal from "@/components/modal/SelectEmotion";
 import ModalPortal from "@/components/portal/ModalPortal.jsx";
 import AlertPortal from "@/components/portal/AlertPortal.jsx";
 import Calendar from "@/components/calender/Calender";
+import Loading from "../components/portal/Loading";
 
 const Main = () => {
   const [settings, setSettings] = useRecoilState(currentUserSettingState);
   const [userData, setUserData] = useRecoilState(currentUserState);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [loadState, setLoadingState] = useRecoilState(loadingState);
 
   async function getSettingOpenModal() {
-    const res = await apiRequest("get", "v1/api/user/setting");
-    if(res.status !== 200) return alert(res.data.message);
+    setLoadingState(true);
+    let applicationSetting = {};
+    if (!localStorage.applicationSetting) {
+      const res = await apiRequest("get", "v1/api/user/setting");
+      if (res.status !== 200) return alert(res.data.message);
+      applicationSetting = res.data.data;
+      localStorage.applicationSetting = JSON.stringify(applicationSetting);
+    } else applicationSetting = JSON.parse(localStorage.applicationSetting);
+
     setSettings({
       ...settings,
-      alert: res.data.data.alert,
-      backgroundColor: res.data.data.backgroundColor,
-      font: res.data.data.font,
-      fontSize: res.data.data.fontSize,
-      passwordLock: res.data.data.passwordLock,
-      syncronize: res.data.data.syncronize,
-      theme: res.data.data.theme,
+      alert: applicationSetting.alert,
+      backgroundColor: applicationSetting.backgroundColor,
+      font: applicationSetting.font,
+      fontSize: applicationSetting.fontSize,
+      passwordLock: applicationSetting.passwordLock,
+      syncronize: applicationSetting.syncronize,
+      theme: applicationSetting.theme,
     });
+    setLoadingState(false);
     setIsModalOpen("setting");
   }
 
   function selectTodayEmotion() {
     console.log("오늘의 감정 선택");
   }
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   return (
     <>
@@ -71,9 +86,10 @@ const Main = () => {
         </ModalPortal>
       ) : (
         <ModalPortal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-          <SpinEmotionModal settings={settings} onClose={() => setIsModalOpen(false)} />
+          <SelecttEmotionModal settings={settings} onClose={closeModal} />
         </ModalPortal>
       )}
+      <Loading></Loading>
     </>
   );
 };
